@@ -204,3 +204,45 @@ class AuthService:
             "email": user["email"],
             "name": user["name"]
         }
+    def reset_password(self, email: str, new_password: str) -> bool:
+        """
+        Reset a user's password.
+        
+        This method updates the password for an existing user. It should be called
+        after proper authentication and validation have been performed at the service layer.
+        
+        Args:
+            email: The email address of the user whose password should be reset
+            new_password: The new password (should already be hashed by the service layer)
+        
+        Returns:
+            True if the password was successfully reset, False if user not found
+        
+        Raises:
+            ValueError: If email or new_password is empty or None
+        
+        Note:
+            - This method assumes the new_password is already hashed
+            - Email validation should be done at the service layer
+            - Password strength validation should be done at the service layer
+        """
+        # Input validation
+        if not email or not isinstance(email, str):
+            raise ValueError("Email must be a non-empty string")
+        
+        if not new_password or not isinstance(new_password, str):
+            raise ValueError("New password must be a non-empty string")
+        
+        # Normalize email to lowercase for case-insensitive lookup
+        email = email.lower().strip()
+        
+        # Check if user exists
+        user = self._users.get(email)
+        if not user:
+            return False
+        
+        # Update password
+        user["password"] = new_password
+        return True
+
+
