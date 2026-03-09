@@ -102,6 +102,4 @@ class UserRepository:
         """
         return email in self._users
 
-    
-
 # Made with Bob
