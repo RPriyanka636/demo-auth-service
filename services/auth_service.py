@@ -183,24 +183,4 @@ class AuthService:
 
         return True, reset_token, "Password reset token generated successfully"
 
-    def get_user_info(self, email: str) -> Optional[Dict]:
-        """
-        Get user information by email (without password).
-
-        Args:
-            email: User's email address
-
-        Returns:
-            User information dictionary or None if not found
-        """
-        user = self.user_repository.find_by_email(email)
-        
-        if not user:
-            return None
-
-        # Return user data without password
-        return {
-            "user_id": user["user_id"],
-            "email": user["email"],
-            "name": user["name"]
-        }
+    
